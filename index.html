@@ -3,10 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link href="style.css" rel="stylesheet"/>
   </head>
   <body>
-    <div class="uploader">
+    <div class="uploader-wrapper">
+      <div class="uploader">
 
+      </div>
     </div>
   </body>
   <script
@@ -15,22 +18,25 @@
   crossorigin="anonymous"></script>
   <script src="script.js" charset="utf-8"></script>
   <script type="text/javascript">
-    $(".uploader").Uploader({
-      questions : [
-        {
-          id : 169
-        },
-        {
-          id : 260
-        },
-        {
-          id : 261
-        },
-        {
-          id : 262
-        }
-      ],
+    var uploader;
+    function addItem(response) {
+      console.log("over loaded");
+      uploader.addItem(response);
+    }
+
+    function  updateItem(response){
+      if (response["success"] == 1)
+        uploader.updateItem()
+    }
+
+    uploader = $(".uploader").Uploader({
       required : 1,
+      max: 5,
+      list : '<li><p><span class="file-name"></span><span><a class="pd-lt-10 icon-delete" href="#">delete</a></span></p></li>',
+      deleteFileClass : "icon-delete",
+      uploadUrl : "upload.php",
+      uploadCallback : addItem,
+      deleteCallback : updateItem,
     });
   </script>
 </html>
